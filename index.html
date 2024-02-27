@@ -87,16 +87,40 @@
         </ul>
     </nav>
 
+    <script src="https://cdn.jsdelivr.net/npm/fuse.js/dist/fuse.min.js"></script>
     <script>
         function buscarProducto() {
-            // Obtener el valor ingresado en el campo de búsqueda
-            var searchTerm = document.getElementById("search-input").value;
-            
-            // Aquí puedes realizar la lógica de búsqueda con el término ingresado
-            // Por ejemplo, podrías redirigir a una página de resultados de búsqueda o mostrar los resultados en esta misma página
-            
-            // En este ejemplo, simplemente mostraremos una alerta con el término de búsqueda
-            alert("Buscando productos relacionados con: " + searchTerm);
+            var searchTerm = document.getElementById("search-input").value.toLowerCase();
+            var contenido = [
+                {
+                    title: "Producto 1",
+                    description: "Descripción del Producto 1"
+                },
+                {
+                    title: "Producto 2",
+                    description: "Descripción del Producto 2"
+                },
+                // Agrega más productos según sea necesario
+            ];
+
+            var options = {
+                keys: ["title", "description"]
+            };
+
+            var fuse = new Fuse(contenido, options);
+            var result = fuse.search(searchTerm);
+
+            if (result.length > 0) {
+                // Mostrar los resultados encontrados
+                var message = "Resultados encontrados:\n";
+                result.forEach(function(item) {
+                    message += "Título: " + item.title + "\n";
+                    message += "Descripción: " + item.description + "\n\n";
+                });
+                alert(message);
+            } else {
+                alert("No se encontraron resultados para: " + searchTerm);
+            }
         }
     </script>
 </body>
